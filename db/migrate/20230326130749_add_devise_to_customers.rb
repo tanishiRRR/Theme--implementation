@@ -34,7 +34,18 @@ class AddDeviseToCustomers < ActiveRecord::Migration[6.1]
 
 
       # Uncomment below if timestamps were not included in your original model.
-      # t.timestamps null: false
+
+      ##保存するカラム
+      t.string :last_name
+      t.string :first_name
+      t.string :last_name_kana
+      t.string :first_name_kana
+      t.string :postal_code
+      t.string :address
+      t.string :telephone_number
+      t.boolean :is_deleted
+
+      t.timestamps null: false
     end
 
     add_index :customers, :email,                unique: true
