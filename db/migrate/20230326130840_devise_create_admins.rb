@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-class AddDeviseToCustomers < ActiveRecord::Migration[6.1]
-  def self.up
-    change_table :customers do |t|
+class DeviseCreateAdmins < ActiveRecord::Migration[6.1]
+  def change
+    create_table :admins do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
@@ -34,29 +34,18 @@ class AddDeviseToCustomers < ActiveRecord::Migration[6.1]
 
 
       # Uncomment below if timestamps were not included in your original model.
-
-      ##保存するカラム
-      t.string :last_name
-      t.string :first_name
-      t.string :last_name_kana
-      t.string :first_name_kana
-      t.string :postal_code
-      t.string :address
-      t.string :telephone_number
-      t.boolean :is_deleted
-
-      t.timestamps null: false
+      # t.timestamps null: false
     end
 
-    add_index :customers, :email,                unique: true
-    add_index :customers, :reset_password_token, unique: true
-    # add_index :customers, :confirmation_token,   unique: true
-    # add_index :customers, :unlock_token,         unique: true
+    add_index :admins, :email,                unique: true
+    add_index :admins, :reset_password_token, unique: true
+    # add_index :admins, :confirmation_token,   unique: true
+    # add_index :admins, :unlock_token,         unique: true
   end
 
-  def self.down
-    # By default, we don't want to make any assumption about how to roll back a migration when your
-    # model already existed. Please edit below which fields you would like to remove in this migration.
-    raise ActiveRecord::IrreversibleMigration
-  end
+  # def self.down
+  #   # By default, we don't want to make any assumption about how to roll back a migration when your
+  #   # model already existed. Please edit below which fields you would like to remove in this migration.
+  #   raise ActiveRecord::IrreversibleMigration
+  # end
 end
