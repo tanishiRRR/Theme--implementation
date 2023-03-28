@@ -6,6 +6,13 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # 画像投稿機能
-  has_one_attached :image
+  # カート内商品
+  has_many :cart_items, dependent: :destroy
+
+  # 注文
+  has_many :orders, dependent: :destroy
+
+  # 配送先
+  has_many :addresses, dependent: :destroy
+
 end
