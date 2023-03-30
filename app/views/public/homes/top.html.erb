@@ -1,10 +1,20 @@
 <div>
-<h1>新着商品</h1>
+  <div>
+    <p>
+      ようこそ、ながのCAKEへ！<br>
+      このサイトは、ケーキ販売のECサイトになります。<br>
+      会員出ない型も商品の閲覧はできますが、<br>
+      購入には会員登録が必要になります。
+    </p>
+  </div>
 
-<% @items.each do |items| %>
-  <% if admin.image.attached? %>
-      <%= image_tag admin.image, size: "200x200" %>
-  <% else %>
-      <p>'no_image'</p>
-  <% end %>
+  <h1>新着商品</h1>
+
+  <div><p>1</p></div>
+  <div><p>2</p></div>
+  <div><p>3</p></div>
+  <div><p>4</p></div>
+
+<!--一覧へのリンク-->
+
 </div>
