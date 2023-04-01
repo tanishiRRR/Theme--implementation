@@ -30,7 +30,7 @@ class Admin::ItemsController < ApplicationController
 # 投稿データのストロングパラメータ
 private
   def item_params
-    params.require(:item).premit(:name, :introduction, :price)
+    params.require(:item).premit(:name, :introduction, :price, :is_active)
   end
 
 end

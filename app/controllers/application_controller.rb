@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     customers_my_page_path
   end
 
-  def after_admin_sign_in_for(resource)
+  def after_admins_sign_in_for(resource)
     admin_root_path
   end
 

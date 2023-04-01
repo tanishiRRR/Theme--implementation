@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
 # 顧客用
-# URL /customers/sign_in ...
 devise_for :customers,skip: [:passwords], controllers: {
   registrations: "public/registrations",
   sessions: 'public/sessions'
@@ -13,12 +12,12 @@ devise_for :customers,skip: [:passwords], controllers: {
   get 'items' => 'public/items#index'
   get 'items/:id' => 'public/items#show'
 
-  get 'customers/sign_up' => 'public/registrations#new'
-  post 'customers' => 'public/registrations#create'
+  # get 'customers/sign_up' => 'public/registrations#new'
+  # post 'customers' => 'public/registrations#create'
 
-  get 'customers/sign_in' => 'public/sessions#new'
-  post 'customers/sign_in' => 'public/sessions#create'
-  delete 'customers/sign_out' => 'public/sessions#destroy'
+  # get 'customers/sign_in' => 'public/sessions#new'
+  # post 'customers/sign_in' => 'public/sessions#create'
+  # delete 'customers/sign_out' => 'public/sessions#destroy'
 
   get 'customers/my_page' => 'public/customers#show'
   get 'customers/information/edit' =>'public/customers#edit'
@@ -46,15 +45,14 @@ devise_for :customers,skip: [:passwords], controllers: {
   delete 'addresses/:id' => 'public/addresses#destroy'
 
 # 管理者用
-# URL /admin/sign_in ...
 devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   sessions: "admin/sessions"
 }
 
   namespace :admin do
-    get 'sign_in' => 'sessions#new'
-    post 'sign_in' => 'sessions#create'
-    delete 'sign_out' => 'sessions#destroy'
+    # get 'sign_in' => 'sessions#new'
+    # post 'sign_in' => 'sessions#create'
+    # delete 'sign_out' => 'sessions#destroy'
 
     root to: 'homes#top'
 
