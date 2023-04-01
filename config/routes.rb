@@ -52,33 +52,33 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
 }
 
   namespace :admin do
-    get 'admin/sign_in' => 'sessions#new'
-    post 'admin/sign_in' => 'sessions#create'
-    delete 'admin/sign_out' => 'sessions#destroy'
+    get 'sign_in' => 'sessions#new'
+    post 'sign_in' => 'sessions#create'
+    delete 'sign_out' => 'sessions#destroy'
 
-    get 'admin' => 'admin/homes#top'
+    root to: 'homes#top'
 
-    get 'admin/items' => 'admin/items#index'
-    get 'admin/items/new' => 'admin/items#new'
-    post 'admin/items' => 'admin/items#create'
-    get 'admin/items/:id' => 'admin/items#show'
-    get 'admin/items/:id/edit' => 'admin/items#edit'
-    patch 'admin/items/:id' => 'admin/items#update'
+    get 'items' => 'items#index'
+    get 'items/new' => 'items#new'
+    post 'items' => 'items#create'
+    get 'items/:id' => 'items#show'
+    get 'items/:id/edit' => 'items#edit'
+    patch 'items/:id' => 'items#update'
 
-    get 'admin/genres' => 'admin/genres#index'
-    post 'admin/genres' => 'admin/genres#create'
-    get 'admin/genres/:id/edit' => 'admin/genres#edit'
-    patch 'admin/genres/:id' => 'admin/genres#update'
+    get 'genres' => 'genres#index'
+    post 'genres' => 'genres#create'
+    get 'genres/:id/edit' => 'genres#edit'
+    patch 'genres/:id' => 'genres#update'
 
-    get 'admin/customers' => 'admin/customers#index'
-    get 'admin/customers/:id' => 'admin/customers#show'
-    get 'admin/customers/:id/edit' => 'admin/customers#edit'
-    patch 'admin/customers/:id' => 'admin/customers#update'
+    get 'customers' => 'customers#index'
+    get 'customers/:id' => 'customers#show'
+    get 'customers/:id/edit' => 'customers#edit'
+    patch 'customers/:id' => 'customers#update'
 
-    get 'admin/orders/:id' => 'admin/orders#show'
-    patch 'admin/orders/:id' => 'admin/orders#update'
+    get 'orders/:id' => 'orders#show'
+    patch 'orders/:id' => 'orders#update'
 
-    patch 'admin/orders/:order_id/order_details/:id' => 'admin/order_details#update'
+    patch 'orders/:order_id/order_details/:id' => 'order_details#update'
 
   end
 
