@@ -1,5 +1,8 @@
 class Admin::GenresController < ApplicationController
 
+  # 管理者のみが特定の内容を扱えるように制限
+  before_action :admin_scan, only: [:index, :create, :edit, :update]
+
   def index
     @genre = Genre.new
     @genres = Genre.all
@@ -16,21 +19,15 @@ class Admin::GenresController < ApplicationController
   end
 
   def edit
-    # 他のユーザーからのアクセスを制限
-    is_matching_login_user
     @genre = Genre.find(params[:id])
   end
 
   def update
-    # 他のユーザーからのアクセスを制限
-    is_matching_login_user
-    # 関数の定義
-    @genre = Genre.find(params[:id])
-    @genre.update(genre_params)
-    if @genre.save
+    genre = Genre.find(params[:id])
+    genre.update(genre_params)
+    if genre.save
       flash[:notice] = "You have updated genre successfully."
-
-      redirect_to admin_genres_path(@genre.id)
+      redirect_to admin_genres_path(genre.id)
     else
       render :edit
     end
@@ -42,9 +39,8 @@ private
     params.require(:genre).permit(:name)
   end
 
-  def is_matching_login_user
-    admin_id = genre.find(params[:id]).admin.id
-    unless admin_id == current_admin.id
+  def admin_scan
+    unless current_admin
       redirect_to new_admin_session_path
     end
   end
