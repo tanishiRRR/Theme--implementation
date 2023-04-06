@@ -12,13 +12,6 @@ devise_for :customers,skip: [:passwords], controllers: {
   get 'items' => 'public/items#index'
   get 'items/:id' => 'public/items#show', as: 'item'
 
-  # get 'customers/sign_up' => 'public/registrations#new'
-  # post 'customers' => 'public/registrations#create'
-
-  # get 'customers/sign_in' => 'public/sessions#new'
-  # post 'customers/sign_in' => 'public/sessions#create'
-  # delete 'customers/sign_out' => 'public/sessions#destroy'
-
   get 'customers/my_page' => 'public/customers#show'
   get 'customers/information/edit' =>'public/customers#edit'
   patch 'customers/information' => 'public/customers#update'
@@ -50,13 +43,10 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
 }
 
   namespace :admin do
-    # get 'sign_in' => 'sessions#new'
-    # post 'sign_in' => 'sessions#create'
-    # delete 'sign_out' => 'sessions#destroy'
 
     root to: 'homes#top'
 
-    resources :items
+    resources :items, only: [:index, :new,:create, :show, :edit, :update]
 
     # get 'items' => 'items#index'
     # get 'items/new' => 'items#new'
@@ -65,10 +55,12 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     # get 'items/:id/edit' => 'items#edit', as: 'edit_item'
     # patch 'items/:id' => 'items#update', as: 'update_item'
 
-    get 'genres' => 'genres#index'
-    post 'genres' => 'genres#create'
-    get 'genres/:id/edit' => 'genres#edit', as: 'edit_genre'
-    patch 'genres/:id' => 'genres#update', as: 'update_genre'
+    resources :genres, only: [:index, :create, :edit, :update]
+
+    # get 'genres' => 'genres#index'
+    # post 'genres' => 'genres#create'
+    # get 'genres/:id/edit' => 'genres#edit', as: 'edit_genre'
+    # patch 'genres/:id' => 'genres#update', as: 'update_genre'
 
     get 'customers' => 'customers#index'
     get 'customers/:id' => 'customers#show', as: 'customer'

@@ -1,5 +1,8 @@
 class Admin::ItemsController < ApplicationController
 
+  # 管理者のみが特定の内容を扱えるように制限
+  before_action :admin_scan, only: [:index, :new, :create, :show, :edit, :update]
+
   def index
     @items = Item.all.page(params[:page]).per(10)
   end
@@ -24,24 +27,18 @@ class Admin::ItemsController < ApplicationController
   end
 
   def edit
-    # 他のユーザーからのアクセスを制限
-    # is_matching_login_user
-    # # 関数の定義
-    # @book = Book.find(params[:id])
+    @item = Item.find(params[:id])
   end
 
   def update
-    # 他のユーザーからのアクセスを制限
-    # is_matching_login_user
-    # # 関数の定義
-    # @book = Book.find(params[:id])
-    # @book.update(book_params)
-    # if @book.save
-    #   flash[:notice] = "You have updated book successfully."
-    #   redirect_to book_path(@book.id)
-    # else
-    #   render :edit
-    # end
+    @item = Item.find(params[:id])
+    @item.update(item_params)
+    if @item.save
+      flash[:notice] = "You have updated item successfully."
+      redirect_to admin_item_path(@item.id)
+    else
+      render :edit
+    end
   end
 
 # 投稿データのストロングパラメータ
@@ -50,11 +47,10 @@ private
     params.require(:item).permit(:name, :introduction, :genre_id, :price, :is_active, :image)
   end
 
-  # def is_matching_login_user
-  #   user_id = Book.find(params[:id]).user.id
-  #   unless user_id == current_user.id
-  #     redirect_to books_path
-  #   end
-  # end
+  def admin_scan
+    unless current_admin
+      redirect_to new_admin_session_path
+    end
+  end
 
 end
