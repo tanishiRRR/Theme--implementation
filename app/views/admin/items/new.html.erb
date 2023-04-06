@@ -1,5 +1,6 @@
 <h2>商品新規登録</h2>
-  <%= form_with model: @image do |f| %>
+<%= form_with model: @item, url: admin_items_path, method: :post do |f| %>
+<!---->
 
     <table>
       <tbody>
@@ -17,11 +18,11 @@
         </tr>
         <tr>
           <td>ジャンル</td>
-          <td></td>
+          <td><%= f.select :genre_id, Genre.all.map { |category| [category.name, category.id] }, {include_blank: '--選択してください--'} %></td>
         </tr>
         <tr>
           <td>税抜価格</td>
-          <td><%= f.number_field :price, placeholder: "税抜価格"  %></td>
+          <td><%= f.number_field :price, placeholder: "税抜価格" %>円</td>
         </tr>
         <tr>
           <td>販売ステータス</td>
@@ -39,4 +40,4 @@
       <%= f.submit '新規登録' %>
     </div>
 
-  <% end %>
+<% end %>

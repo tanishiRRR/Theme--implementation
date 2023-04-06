@@ -1,26 +1,27 @@
 class Admin::ItemsController < ApplicationController
 
+  def index
+    @items = Item.all.page(params[:page]).per(10)
+  end
+
   def new
     @item = Item.new
   end
 
   def create
+    # binding.pry
     @item = Item.new(item_params)
     if @item.save
       flash[:notice] = "You have created item successfully."
-      redirect_to admin_path(@item.id)
+      redirect_to admin_item_path(@item.id)
     else
       render :new
     end
   end
 
   def show
+    @item = Item.find(params[:id])
   end
-
-  def index
-    @items = Item.all.page(params[:page]).per(10)
-  end
-
 
   def edit
     # 他のユーザーからのアクセスを制限
@@ -46,7 +47,7 @@ class Admin::ItemsController < ApplicationController
 # 投稿データのストロングパラメータ
 private
   def item_params
-    params.require(:item).premit(:name, :introduction, :price, :is_active, :image)
+    params.require(:item).permit(:name, :introduction, :genre_id, :price, :is_active, :image)
   end
 
   # def is_matching_login_user

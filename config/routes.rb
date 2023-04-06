@@ -56,12 +56,14 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
 
     root to: 'homes#top'
 
-    get 'items' => 'items#index'
-    get 'items/new' => 'items#new'
-    post 'items' => 'items#create'
-    get 'items/:id' => 'items#show', as: 'item'
-    get 'items/:id/edit' => 'items#edit', as: 'edit_item'
-    patch 'items/:id' => 'items#update'
+    resources :items
+
+    # get 'items' => 'items#index'
+    # get 'items/new' => 'items#new'
+    # post 'items' => 'items#create', as: 'create_item'
+    # get 'items/:id' => 'items#show', as: 'item'
+    # get 'items/:id/edit' => 'items#edit', as: 'edit_item'
+    # patch 'items/:id' => 'items#update', as: 'update_item'
 
     get 'genres' => 'genres#index'
     post 'genres' => 'genres#create'

@@ -13,18 +13,18 @@
 
   <% end %>
 
-<% @genres.each do |genre| %>
-  <table>
-    <thead>
-      <tr>
-        <td>ジャンル名</td>
-      </tr>
-    </thead>
-    <tbody>
+<table>
+  <thead>
+    <tr>
+      <td>ジャンル名</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @genres.each do |genre| %>
       <tr>
         <td><%= genre.name %></td>
         <td><%= link_to "編集する", admin_edit_genre_path(genre) %></td>
       </tr>
-    </tbody>
-  </table>
-<% end %>
+    <% end %>
+  </tbody>
+</table>
