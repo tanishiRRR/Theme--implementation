@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
 # 顧客用
-# URL /customers/sign_in ...
 devise_for :customers,skip: [:passwords], controllers: {
   registrations: "public/registrations",
   sessions: 'public/sessions'
@@ -11,14 +10,7 @@ devise_for :customers,skip: [:passwords], controllers: {
   get 'homes/about' => 'public/homes#about', as: 'about'
 
   get 'items' => 'public/items#index'
-  get 'items/:id' => 'public/items#show'
-
-  get 'customers/sign_up' => 'public/registrations#new'
-  post 'customers' => 'public/registrations#create'
-
-  get 'customers/sign_in' => 'public/sessions#new'
-  post 'customers/sign_in' => 'public/sessions#create'
-  delete 'customers/sign_out' => 'public/sessions#destroy'
+  get 'items/:id' => 'public/items#show', as: 'item'
 
   get 'customers/my_page' => 'public/customers#show'
   get 'customers/information/edit' =>'public/customers#edit'
@@ -28,57 +20,57 @@ devise_for :customers,skip: [:passwords], controllers: {
 
   get 'cart_items' => 'public/cart_items#index'
   patch 'cart_items/:id' => 'public/cart_items#update'
-  delete 'cart_items/:id' => 'public/cart_items#destroy'
+  delete 'cart_items/:id' => 'public/cart_items#destroy', as: 'destroy_item'
   delete 'cart_items/destroy_all' => 'public/cart_items#destroy_all'
-  post 'cart_items' => 'public/cart_items#create'
+  post 'cart_items' => 'public/cart_items#create', as: 'create_item'
 
   get 'orders/new' => 'public/orders#new'
   post 'orders/confirm' => 'public/orders#comfirm'
   get 'orders/complete' => 'public/orders#complete'
   post 'orders' => 'public/orders#create'
   get 'orders' => 'public/orders#index'
-  get 'orders/:id' => 'public/orders#show'
+  get 'orders/:id' => 'public/orders#show', as: 'order'
 
   get 'addresses' => 'public/addresses#index'
-  get 'addresses/:id/edit' => 'public/addresses#edit'
   post 'addresses' => 'public/addresses#create'
+  get 'addresses/:id/edit' => 'public/addresses#edit', as: 'edit_address'
   patch 'addresses/:id' => 'public/addresses#update'
-  delete 'addresses/:id' => 'public/addresses#destroy'
+  delete 'addresses/:id' => 'public/addresses#destroy', as: 'destroy_address'
 
 # 管理者用
-# URL /admin/sign_in ...
 devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
   sessions: "admin/sessions"
 }
 
   namespace :admin do
-    get 'sign_in' => 'sessions#new'
-    post 'sign_in' => 'sessions#create'
-    delete 'sign_out' => 'sessions#destroy'
 
     root to: 'homes#top'
 
-    get 'items' => 'items#index'
-    get 'items/new' => 'items#new'
-    post 'items' => 'items#create'
-    get 'items/:id' => 'items#show'
-    get 'items/:id/edit' => 'items#edit'
-    patch 'items/:id' => 'items#update'
+    resources :items, only: [:index, :new,:create, :show, :edit, :update]
 
-    get 'genres' => 'genres#index'
-    post 'genres' => 'genres#create'
-    get 'genres/:id/edit' => 'genres#edit'
-    patch 'genres/:id' => 'genres#update'
+    # get 'items' => 'items#index'
+    # get 'items/new' => 'items#new'
+    # post 'items' => 'items#create', as: 'create_item'
+    # get 'items/:id' => 'items#show', as: 'item'
+    # get 'items/:id/edit' => 'items#edit', as: 'edit_item'
+    # patch 'items/:id' => 'items#update', as: 'update_item'
+
+    resources :genres, only: [:index, :create, :edit, :update]
+
+    # get 'genres' => 'genres#index'
+    # post 'genres' => 'genres#create'
+    # get 'genres/:id/edit' => 'genres#edit', as: 'edit_genre'
+    # patch 'genres/:id' => 'genres#update', as: 'update_genre'
 
     get 'customers' => 'customers#index'
-    get 'customers/:id' => 'customers#show'
-    get 'customers/:id/edit' => 'customers#edit'
+    get 'customers/:id' => 'customers#show', as: 'customer'
+    get 'customers/:id/edit' => 'customers#edit', as: 'edit_customer'
     patch 'customers/:id' => 'customers#update'
 
-    get 'orders/:id' => 'orders#show'
+    get 'orders/:id' => 'orders#show', as: 'order'
     patch 'orders/:id' => 'orders#update'
 
-    patch 'orders/:order_id/order_details/:id' => 'order_details#update'
+    patch 'orders/:order_id/order_details/:id' => 'order_details#update', as: 'order_detail'
 
   end
 

@@ -7,7 +7,7 @@ class Item < ApplicationRecord
   has_many :order_details, dependent: :destroy
 
   # ジャンル
-  belongs_to :genres
+  belongs_to :genre
 
   # 画像投稿機能
   has_one_attached :image
