@@ -6,36 +6,43 @@ devise_for :customers,skip: [:passwords], controllers: {
   sessions: 'public/sessions'
 }
 
-  root to: 'public/homes#top'
-  get 'homes/about' => 'public/homes#about', as: 'about'
+  scope module: :public do
 
-  get 'items' => 'public/items#index'
-  get 'items/:id' => 'public/items#show', as: 'item'
+    root to: 'homes#top'
+    get 'homes/about' => 'homes#about', as: 'about'
 
-  get 'customers/my_page' => 'public/customers#show'
-  get 'customers/information/edit' =>'public/customers#edit'
-  patch 'customers/information' => 'public/customers#update'
-  get 'customers/unsubscribe' => 'public/customers#unsubscribe'
-  patch 'customers/withdraw' => 'public/customers#withdraw'
+    resources :items, only: [:index, :show]
+    # get 'items' => 'items#index'
+    # get 'items/:id' => 'items#show', as: 'item'
 
-  get 'cart_items' => 'public/cart_items#index'
-  patch 'cart_items/:id' => 'public/cart_items#update'
-  delete 'cart_items/:id' => 'public/cart_items#destroy', as: 'destroy_item'
-  delete 'cart_items/destroy_all' => 'public/cart_items#destroy_all'
-  post 'cart_items' => 'public/cart_items#create', as: 'create_item'
+    get 'customers/my_page' => 'customers#show'
+    get 'customers/information/edit' =>'customers#edit'
+    patch 'customers/information' => 'customers#update'
+    get 'customers/unsubscribe' => 'customers#unsubscribe'
+    patch 'customers/withdraw' => 'customers#withdraw'
 
-  get 'orders/new' => 'public/orders#new'
-  post 'orders/confirm' => 'public/orders#comfirm'
-  get 'orders/complete' => 'public/orders#complete'
-  post 'orders' => 'public/orders#create'
-  get 'orders' => 'public/orders#index'
-  get 'orders/:id' => 'public/orders#show', as: 'order'
+    resources :cart_items, only: [:index, :update, :destroy, :create]
+    # get 'cart_items' => 'cart_items#index'
+    # patch 'cart_items/:id' => 'cart_items#update'
+    # delete 'cart_items/:id' => 'cart_items#destroy', as: 'destroy_item'
+    delete 'cart_items/destroy_all' => 'cart_items#destroy_all'
+    # post 'cart_items' => 'cart_items#create', as: 'create_item'
 
-  get 'addresses' => 'public/addresses#index'
-  post 'addresses' => 'public/addresses#create'
-  get 'addresses/:id/edit' => 'public/addresses#edit', as: 'edit_address'
-  patch 'addresses/:id' => 'public/addresses#update'
-  delete 'addresses/:id' => 'public/addresses#destroy', as: 'destroy_address'
+    resources :order, only: [:new, :create, :index , :show]
+    # get 'orders/new' => 'orders#new'
+    post 'orders/confirm' => 'orders#comfirm'
+    get 'orders/complete' => 'orders#complete'
+    # post 'orders' => 'orders#create'
+    # get 'orders' => 'orders#index'
+    # get 'orders/:id' => 'orders#show', as: 'order'
+
+    resources :addresses, only: [:index, :create, :edit, :update, :destroy]
+    # get 'addresses' => 'addresses#index'
+    # post 'addresses' => 'addresses#create'
+    # get 'addresses/:id/edit' => 'addresses#edit', as: 'edit_address'
+    # patch 'addresses/:id' => 'addresses#update'
+    # delete 'addresses/:id' => 'addresses#destroy', as: 'destroy_address'
+  end
 
 # 管理者用
 devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
