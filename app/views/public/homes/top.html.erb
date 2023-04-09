@@ -11,10 +11,13 @@
   <table>
     <tbody>
       <tr>
-        <td>1</td>
-        <td>2</td>
-        <td>3</td>
-        <td>4</td>
+        <% @items.each do |item| %>
+        <td>
+          <%= image_tag item.get_image %><br>
+          <%= item.name %><br>
+          ￥<%= item.price.to_s(:delimited) %>
+        </td>
+        <% end %>
       </tr>
     </tbody>
   </table>
