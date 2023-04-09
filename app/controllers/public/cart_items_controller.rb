@@ -1,7 +1,7 @@
 class Public::CartItemsController < ApplicationController
 
   # ログインしている顧客のみが特定の内容を扱えるように制限
-  before_action :customer_scan, only: [:create, :update, :destroy]
+  before_action :customer_scan, only: [:index, :update, :destroy, :destroy_all, :create]
 
   def index
   end

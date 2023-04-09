@@ -54,7 +54,6 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     root to: 'homes#top'
 
     resources :items, only: [:index, :new,:create, :show, :edit, :update]
-
     # get 'items' => 'items#index'
     # get 'items/new' => 'items#new'
     # post 'items' => 'items#create', as: 'create_item'
@@ -63,19 +62,20 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     # patch 'items/:id' => 'items#update', as: 'update_item'
 
     resources :genres, only: [:index, :create, :edit, :update]
-
     # get 'genres' => 'genres#index'
     # post 'genres' => 'genres#create'
     # get 'genres/:id/edit' => 'genres#edit', as: 'edit_genre'
     # patch 'genres/:id' => 'genres#update', as: 'update_genre'
 
-    get 'customers' => 'customers#index'
-    get 'customers/:id' => 'customers#show', as: 'customer'
-    get 'customers/:id/edit' => 'customers#edit', as: 'edit_customer'
-    patch 'customers/:id' => 'customers#update'
+    resources :customers, only: [:index, :show, :edit, :update]
+    # get 'customers' => 'customers#index'
+    # get 'customers/:id' => 'customers#show', as: 'customer'
+    # get 'customers/:id/edit' => 'customers#edit', as: 'edit_customer'
+    # patch 'customers/:id' => 'customers#update'
 
-    get 'orders/:id' => 'orders#show', as: 'order'
-    patch 'orders/:id' => 'orders#update'
+    resources :orders, only: [:show, :update]
+    # get 'orders/:id' => 'orders#show', as: 'order'
+    # patch 'orders/:id' => 'orders#update'
 
     patch 'orders/:order_id/order_details/:id' => 'order_details#update', as: 'order_detail'
 
