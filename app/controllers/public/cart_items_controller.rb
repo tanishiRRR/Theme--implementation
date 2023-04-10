@@ -4,16 +4,26 @@ class Public::CartItemsController < ApplicationController
   before_action :customer_scan, only: [:index, :update, :destroy, :destroy_all, :create]
 
   def index
+    @cart_items = CartItem.all
   end
 
   def update
-
+    @cart_item = CartItem.find(params[:id])
+    @cart_item.update(cart_item_params)
+    @cart_item.save
+      flash[:notice] = "You have updated cart_item successfully."
+      redirect_to cart_items_path
   end
 
   def destroy
+    cart_item = CartItem.find(params[:id])
+    cart_item.destroy
+    redirect_to cart_items_path
   end
 
   def destroy_all
+    CartItem.destroy_all
+    redirect_to cart_items_path
   end
 
   def create
