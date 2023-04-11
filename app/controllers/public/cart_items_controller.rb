@@ -4,7 +4,9 @@ class Public::CartItemsController < ApplicationController
   before_action :customer_scan, only: [:index, :update, :destroy, :destroy_all, :create]
 
   def index
-    @cart_items = CartItem.all
+    @cart_items = current_customer.cart_items.all
+    # カートに入ってる商品の合計金額
+    @total = @cart_items.inject(0){ |sum, item| sum + item.subtotal }
   end
 
   def update
@@ -22,7 +24,7 @@ class Public::CartItemsController < ApplicationController
   end
 
   def destroy_all
-    CartItem.destroy_all
+    current_customer.cart_items.destroy_all
     redirect_to cart_items_path
   end
 

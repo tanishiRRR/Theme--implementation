@@ -5,9 +5,11 @@
 
 <div>
   <% @items.each do |item| %>
-  <%= image_tag item.get_image %><br>
-  <%= item.name %><br>
-  ￥<%= item.price.to_s(:delimited) %><br>
+    <%= link_to item_path(item.id) do %>
+      <%= image_tag item.get_image %><br>
+    <% end %>
+    <%= item.name %><br>
+    ￥<%= item.price.to_s(:delimited) %><br>
   <% end %>
 </div>
 
