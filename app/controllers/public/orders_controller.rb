@@ -56,7 +56,7 @@ class Public::OrdersController < ApplicationController
       @orderdetail.item_id = cart_item.item_id #商品idを注文商品idに代入
       @orderdetail.price = cart_item.item.with_tax_price #消費税込みに計算して代入
       @orderdetail.amount = cart_item.amount #商品の個数を注文商品の個数に代入
-      @orderdetail. = cart_item.amount #商品の個数を注文商品の個数に代入
+      @orderdetail.making_status = "0"
       @orderdetail.save #注文商品を保存
     end #ループ終わり
 
