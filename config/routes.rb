@@ -29,9 +29,9 @@ devise_for :customers,skip: [:passwords], controllers: {
     # post 'cart_items' => 'cart_items#create', as: 'create_item'
 
     get 'orders/complete' => 'orders#complete'
+    post 'orders/confirm' => 'orders#comfirm'
     resources :orders, only: [:new, :create, :index , :show]
     # get 'orders/new' => 'orders#new'
-    post 'orders/confirm' => 'orders#comfirm'
     # post 'orders' => 'orders#create'
     # get 'orders' => 'orders#index'
     # get 'orders/:id' => 'orders#show', as: 'order'

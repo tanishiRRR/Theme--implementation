@@ -33,7 +33,7 @@ class Public::OrdersController < ApplicationController
       @order.address = params[:order][:address]
       @order.name = params[:order][:name]
     else
-      render :new
+      render 'new'
     end
 
     @cart_items = current_customer.cart_items.all
@@ -49,14 +49,15 @@ class Public::OrdersController < ApplicationController
     @order = Order.new(order_params)
     @order.customer_id = current_customer.id
     @order.save
-    # ordered_itmemの保存
+    # orderdetailの保存
     current_customer.cart_items.each do |cart_item| #カートの商品を1つずつ取り出しループ
-      @order_item = OrderDetail.new #初期化宣言
-      @ordered_item.item_id = cart_item.item_id #商品idを注文商品idに代入
-      @ordered_item.amount = cart_item.amount #商品の個数を注文商品の個数に代入
-      @ordered_item.price = cart_item.item.with_tax_price #消費税込みに計算して代入
-      @ordered_item.order_id =  @order.id #注文商品に注文idを紐付け
-      @ordered_item.save #注文商品を保存
+      @orderdetail = OrderDetail.new #初期化宣言
+      @orderdetail.order_id =  @order.id #注文商品に注文idを紐付け
+      @orderdetail.item_id = cart_item.item_id #商品idを注文商品idに代入
+      @orderdetail.price = cart_item.item.with_tax_price #消費税込みに計算して代入
+      @orderdetail.amount = cart_item.amount #商品の個数を注文商品の個数に代入
+      @orderdetail. = cart_item.amount #商品の個数を注文商品の個数に代入
+      @orderdetail.save #注文商品を保存
     end #ループ終わり
 
     current_customer.cart_items.destroy_all #カートの中身を削除
@@ -71,7 +72,7 @@ class Public::OrdersController < ApplicationController
   # 注文情報詳細
   def show
     @order = Order.find(params[:id])
-    @ordered_items = @order.ordered_details
+    @ordered_items = @order.order_details
   end
 
   private
