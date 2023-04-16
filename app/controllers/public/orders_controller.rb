@@ -71,6 +71,10 @@ class Public::OrdersController < ApplicationController
 
   # 注文情報詳細
   def show
+    unless Order.exists?(id: params[:id])
+      redirect_to new_order_path
+      return
+    end
     @order = Order.find(params[:id])
     @ordered_items = @order.order_details
   end
