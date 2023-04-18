@@ -1,89 +1,105 @@
 <div class="container">
-  <div class='row mb-3'>
-    <div class='col-8 offset-1'>
-      <h4 class="pt-3">注文情報入力</h4>
+  <%= form_with model: @order, url: orders_confirm_path, method: :post, local: true do |f| %>
+    <div class='row mb-3'>
+      <div class='col-11 offset-1'>
+        <h4 class="pt-3">注文情報入力</h4>
+      </div>
     </div>
-  </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <%= form_with model: @order, url: orders_confirm_path, method: :post, local: true do |f| %>
+
+    <div class="row">
+      <div class="col">
         <h5 class="font-weight-bold">支払い方法</h5>
-        <table>
-          <tr>
-            <td class='col-3'>
-              <%= f.radio_button :payment_method, :credit_card,  checked: "checked" %>
-              <%= f.label :payment_method, "クレジットカード" %>
-            </td>
-          </tr>
-          <tr>
-            <td class='col-3'>
-              <%= f.radio_button :payment_method, :transfer %>
-              <%= f.label :payment_method, "銀行振込" %>
-            </td>
-          </tr>
-        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-11 offset-1">
+        <div>
+          <span>
+            <%= f.radio_button :payment_method, :credit_card,  checked: "checked" %>
+            <%= f.label :payment_method, "クレジットカード" %>
+          </span><br>
+          <span>
+            <%= f.radio_button :payment_method, :transfer %>
+            <%= f.label :payment_method, "銀行振込" %>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
         <h5 class="font-weight-bold">お届け先</h5>
-        <!--:address_optionは、どのカラムに保存したいかを指定するためのもの。
-        (今回は何の住所をラジオボタンで選択したか、を保存するカラムが（必要）ないため
-        適当なカラム名を指定し、一時的に保存する用に使う)-->
-        <!--[:address_option]=="0"として設定する-->
-        <table>
-          <tr>
-            <td class='col-3'>
-              <%= f.radio_button :address_option, 0, checked: "checked" %>
-              <%= f.label :address_option, "ご自身の住所" %>
-            </td>
-          </tr>
-          <tr>
-            <td class='col-3'>
+      </div>
+    </div>
+
+    <!--:address_optionは、どのカラムに保存したいかを指定するためのもの。
+    (今回は何の住所をラジオボタンで選択したか、を保存するカラムが（必要）ないため
+    適当なカラム名を指定し、一時的に保存する用に使う)-->
+
+    <!--[:address_option]=="0"として設定する-->
+    <div class="row">
+      <div class="col-11 offset-1">
+        <div>
+          <span>
+            <%= f.radio_button :address_option, 0, checked: "checked" %>
+            <%= f.label :address_option, "ご自身の住所" %>
+          </span>
+          <div class="pl-4">
+            <span>
               〒<%= current_customer.postal_code %>
               <%= current_customer.address %>
-            </td>
-          </tr>
-          <tr>
-            <td class='col-3'>
-              <%= current_customer.last_name %><%= current_customer.first_name %>
-            </td>
-          </tr>
-        <!--[:address_option]=="1"として設定する-->
-          <tr>
-            <td class='col-3'>
-              <%= f.radio_button :address_option, 1 %>
-              <%= f.label :address_option, "登録済住所から選択" %>
-            </td>
-          </tr>
-          <tr>
-            <td class='col-3'>
-              <%= f.collection_select :customer_id, current_customer.addresses.all, :id, :full_adresses %>
-            </td>
-          </tr>
-        <!--[:address_option]=="2"として設定する-->
-          <tr>
-            <td class='col-3'>
-              <%= f.radio_button :address_option, 2 %>
-              <%= f.label :order_address, "新しいお届け先" %>
-            </td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <td class='col-3'><%= f.label :postal_code, "郵便番号(ハイフンなし)" %></td>
-            <td class='col-9'><%= f.text_field :postal_code, placeholder: "0000000"%></td>
-          </tr>
-          <tr>
-            <td class='col-3'><%= f.label :address, "住所" %></td>
-            <td class='col-9'><%= f.text_field :address, placeholder: "東京都渋谷区代々木神園町0-0", class: "w-100" %></td>
-          </tr>
-          <tr>
-            <td class='col-3'><%= f.label :name, "宛名" %></td>
-            <td class='col-9'><%= f.text_field :name, placeholder: "令和道子" %></td>
-          </tr>
-        </table>
-        <div class="row justify-content-center py-5">
-          <%= f.submit "確認画面へ進む" , class:"btn btn-primary" %>
+            </span><br>
+            <span><%= current_customer.last_name %><%= current_customer.first_name %></span>
+          </div>
         </div>
-      <% end %>
+      </div>
     </div>
-  </div>
+
+    <!--[:address_option]=="1"として設定する-->
+    <div class="row">
+      <div class="col-11 offset-1">
+        <div>
+          <span>
+            <%= f.radio_button :address_option, 1 %>
+            <%= f.label :address_option, "登録済住所から選択" %>
+          </span>
+          <div class="pl-4">
+            <span>
+              <%= f.collection_select :customer_id, current_customer.addresses.all, :id, :full_adresses %>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--[:address_option]=="2"として設定する-->
+    <div class="row">
+      <div class="col-11 offset-1">
+        <div>
+          <span>
+            <%= f.radio_button :address_option, 2 %>
+            <%= f.label :order_address, "新しいお届け先" %>
+          </span>
+          <div class="pl-4">
+            <span>
+              <%= f.label :postal_code, "郵便番号（ハイフンなし）" %>
+              <%= f.text_field :postal_code, placeholder: "0000000"%>
+            </span><br>
+            <span>
+              <%= f.label :address, "住所　　　　　　　　　　" %>
+              <%= f.text_field :address, placeholder: "東京都渋谷区代々木神園町0-0", class: "w-50" %>
+            </span><br>
+            <span>
+              <%= f.label :name, "宛名　　　　　　　　　　" %>
+              <%= f.text_field :name, placeholder: "令和道子" %>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center py-5">
+      <%= f.submit "確認画面へ進む" , class:"btn btn-primary" %>
+    </div>
+  <% end %>
 </div>
