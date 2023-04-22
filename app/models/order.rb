@@ -10,7 +10,11 @@ class Order < ApplicationRecord
   enum status: { waiting_for_payment: 0, payment_confirmation: 1, in_production: 2, preparing_to_ship: 3, sent: 4 }
 
   def subtotal
-    order_details.price * order_details.amount
+    sum = 0
+    order_details.each do |order_detail|
+      sum += order_detail.price * order_detail.amount
+    end
+    sum
   end
 
 end

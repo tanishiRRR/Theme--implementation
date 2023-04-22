@@ -74,9 +74,9 @@
           <% @order_detail.each do |order_detail| %>
             <tr>
               <td><%= order_detail.item.name %></td>
-              <td><%= order_detaile.price %></td>
-              <td><%= order_detaile.amount %></td>
-              <td><%= order_detaile.amount %></td>
+              <td><%= order_detail.price %></td>
+              <td><%= order_detail.amount %></td>
+              <td><%= order_detail.subtotal %></td>
             </tr>
           <% end %>
         </tbody>
