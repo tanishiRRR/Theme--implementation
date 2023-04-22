@@ -22,7 +22,7 @@ class Public::OrdersController < ApplicationController
     # collection.selectであれば
     elsif params[:order][:address_option] == "1"
       @address = Address.find(params[:order][:customer_id])
-　　　#orderのcustomer_id(=カラム)でアドレス(帳)を選び、そのデータ送る
+      # orderのcustomer_id(=カラム)でアドレス(帳)を選び、そのデータ送る
       @order.postal_code = @address.postal_code
       @order.address = @address.address
       @order.name = @address.name
@@ -66,15 +66,11 @@ class Public::OrdersController < ApplicationController
 
   # 注文情報履歴一覧
   def index
-    @orders = current_customer.orders
+    @orders = current_customer.orders.order(created_at: :DESC)
   end
 
   # 注文情報詳細
   def show
-    unless Order.exists?(id: params[:id])
-      redirect_to new_order_path
-      return
-    end
     @order = Order.find(params[:id])
     @ordered_items = @order.order_details
   end

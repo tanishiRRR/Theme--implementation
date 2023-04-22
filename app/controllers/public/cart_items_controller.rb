@@ -13,7 +13,7 @@ class Public::CartItemsController < ApplicationController
     @cart_item = CartItem.find(params[:id])
     @cart_item.update(cart_item_params)
     @cart_item.save
-      flash[:notice] = "You have updated cart_item successfully."
+      flash[:notice] = "カート内商品を編集しました。"
       redirect_to cart_items_path
   end
 
