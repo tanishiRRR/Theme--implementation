@@ -1,0 +1,5 @@
+<% genres.each do |genre| %>
+  <p>
+    <%= link_to genre.name, items_path(genre_id: genre.id) %>
+  </p>
+<% end %>

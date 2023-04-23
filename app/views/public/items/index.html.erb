@@ -1,16 +1,28 @@
-<div>
-  <h2>商品一覧</h2>
-  <p>(全<%= @items.count %>件)</p>
-</div>
+<div class="container">
+  <div class="row">
+    <div class='col-3 pl-3'>
+      <%= render 'public/homes/genre', genres: @genres %>
+    </div>
+    <div class="col-9">
+      <div>
+        <h2>商品一覧</h2>
+        <p>(全<%= @items.count %>件)</p>
+      </div>
 
-<div>
-  <% @items.each do |item| %>
-    <%= link_to item_path(item.id) do %>
-      <%= image_tag item.get_image %><br>
-    <% end %>
-    <%= item.name %><br>
-    ￥<%= item.price.to_s(:delimited) %><br>
-  <% end %>
+      <div>
+        <% @items.each do |item| %>
+          <%= link_to item_path(item.id) do %>
+            <%= image_tag item.get_image %><br>
+          <% end %>
+          <%= item.name %><br>
+          ￥<%= item.price.to_s(:delimited) %><br>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center mt-5">
+      <!--<%#= paginate @items %>-->
+    </div>
+  </div>
 </div>
-
-<%= paginate @items %>

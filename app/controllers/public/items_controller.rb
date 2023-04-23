@@ -1,7 +1,13 @@
 class Public::ItemsController < ApplicationController
 
   def index
-    @items = Item.all.order(created_at: :desc).page(params[:page]).per(10)
+    # byebug
+    if params[:genre_id].present?
+      @items = Item.where(genre_id: params[:genre_id])
+    else
+      @items = Item.all.order(created_at: :desc).page(params[:page]).per(10)
+    end
+    @genres = Genre.all
   end
 
   def show
