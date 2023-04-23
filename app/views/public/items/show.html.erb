@@ -1,18 +1,27 @@
-<div>
-  <%= image_tag @item.get_image %>
-</div>
-
-<div>
-  <%= @item.name %>
-  <%= @item.introduction %>
-  <%= @item.with_tax_price.to_s(:delimited) %>(税込)
-</div>
-
-<div>
-  <%= form_with model: @cart_item, url: cart_items_path, method: :post do |f| %>
-    <%= f.hidden_field :item_id, value: @item.id %>
-    <%= f.hidden_field :customer_id, value: current_customer.id %>
-    <%= f.select :amount, *[1..10], placeholder: "個数選択" %>
-    <%= f.submit 'カートに入れる' %>
-  <% end %>
+<div class="container">
+  <div class="row mt-5">
+    <div class='col-3 pl-3'>
+      <%= render 'public/homes/genre', genres: @genres %>
+    </div>
+    <div class="col-9">
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+            <%= image_tag @item.get_image, size: "180x150" %>
+          </div>
+          <div class="col-8">
+            <span><strong><%= @item.name %></strong></span><br>
+            <span><%= @item.introduction %></span><br>
+            <span><strong><%= @item.with_tax_price.to_s(:delimited) %>(税込)</strong></span><br>
+            <%= form_with model: @cart_item, url: cart_items_path, method: :post do |f| %>
+              <%= f.hidden_field :item_id, value: @item.id %>
+              <%= f.hidden_field :customer_id, value: current_customer.id %>
+              <%= f.select :amount, *[1..10], placeholder: "個数選択" %>
+              <%= f.submit 'カートに入れる' , class: "btn btn-success" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
