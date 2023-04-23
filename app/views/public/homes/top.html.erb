@@ -1,25 +1,38 @@
-<div>
-  <div>
-    <p>
-      ようこそ、ながのCAKEへ！<br>
-      このサイトは、ケーキ販売のECサイトになります。<br>
-      会員出ない型も商品の閲覧はできますが、<br>
-      購入には会員登録が必要になります。
-    </p>
+<div class="container">
+  <div class="row mt-5">
+    <div class='col-3 pl-3'>
+      <%= render 'public/homes/genre', genres: @genres %>
+    </div>
+    <div class="col-9">
+      <div class="center-block mb-3">
+        <div>
+          <span>
+            ようこそ、ながのCAKEへ！<br>
+            このサイトは、ケーキ販売のECサイトになります。<br>
+            会員出ない型も商品の閲覧はできますが、<br>
+            購入には会員登録が必要になります。
+          </span>
+        </div>
+      </div>
+      <div>
+        <span class="h4"><strong>新着商品</strong></span>
+      </div>
+      <div class="container">
+        <div class="row">
+          <% @items.each do |item| %>
+            <div class="col-3">
+              <%= link_to item_path(item.id) do %>
+                <%= image_tag item.get_image, size: "120x100" %>
+              <% end %><br>
+              <%= item.name %><br>
+              ￥<%= item.price.to_s(:delimited) %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-  <h1>新着商品</h1>
-  <table>
-    <tbody>
-      <tr>
-        <% @items.each do |item| %>
-        <td>
-          <%= image_tag item.get_image %><br>
-          <%= item.name %><br>
-          ￥<%= item.price.to_s(:delimited) %>
-        </td>
-        <% end %>
-      </tr>
-    </tbody>
-  </table>
-  <%= link_to "全ての商品を見る", items_path %>
+  <div class="text-right">
+    <%= link_to "全ての商品を見る", items_path %>
+  </div>
 </div>
