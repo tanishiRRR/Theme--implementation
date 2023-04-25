@@ -15,17 +15,21 @@ class Admin::CustomersController < ApplicationController
 
   def update
     customer = Customer.find(params[:id])
+    customer.update(customer_params)
     customer.save
-    flash[:notice] = "カート内商品を編集しました。"
+    flash[:notice] = "顧客情報を編集しました。"
     redirect_to admin_customer_path
   end
 
   private
-
-  def admin_scan
-    unless current_admin
-      redirect_to new_admin_session_path
+    def customer_params
+      params.require(:customer).permit(:last_name, :first_name, :last_name_kana, :first_name_kana, :postal_code, :address, :telephone_number, :email, :is_deleted)
     end
-  end
+
+    def admin_scan
+      unless current_admin
+        redirect_to new_admin_session_path
+      end
+    end
 
 end
