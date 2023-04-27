@@ -6,15 +6,16 @@ class Admin::OrdersController < ApplicationController
   end
 
   def update
+    order = Order.find(params[:id])
+    order.update(order_params)
+    order.save
+      flash[:notice] = "注文ステータスを更新しました。"
+      redirect_to admin_order_path(order.id)
   end
 
   private
     def order_params
       params.require(:order).permit(:status)
-    end
-
-    def order_detail_params
-      params.require(:orderdetail).permit(:making_status)
     end
 
     def admin_scan

@@ -77,7 +77,8 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     # get 'orders/:id' => 'orders#show', as: 'order'
     # patch 'orders/:id' => 'orders#update'
 
-    patch 'orders/:order_id/order_details/:id' => 'order_details#update', as: 'order_detail'
+    resources :order_details, only: [:update]
+    # patch 'orders/:order_id/order_details/:id' => 'order_details#update', as: 'order_detail'
 
   end
 
