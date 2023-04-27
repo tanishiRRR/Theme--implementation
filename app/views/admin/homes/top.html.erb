@@ -1,2 +1,87 @@
-<h1>Admin::Homes#top</h1>
-<p>Find me in app/views/admin/homes/top.html.erb</p>
+<% if params[:customer_id].present? %>
+  <div class="container">
+    <div class="row mt-5">
+      <div class='col-9 offset-1'>
+        <span class="h4"><strong><%= @customer.last_name %><%= @customer.first_name %></strong></span>
+        <span class="h4">さんの</span>
+        <span class="h4"><strong>注文情報</strong></span>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class='col-9 offset-1'>
+        <table class="table">
+          <thead class="table-secondary">
+            <tr>
+              <th>購入日時</th>
+              <th>注文個数</th>
+              <th>注文ステータス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @orders.each do |order| %>
+              <% order.order_details.each do |order_detail| %>
+                <tr>
+                  <td>
+                    <%= link_to admin_order_path(order.id) do %>
+                      <%= l order.created_at %>
+                    <% end %>
+                  </td>
+                  <td><%= order_detail.amount %></td>
+                  <td><%= order.status_i18n %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 offset-4 mt-5">
+        <%= paginate @orders %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="container">
+    <div class="row mt-5">
+      <div class='col-9 offset-1'>
+        <span class="h4">注文履歴一覧</span>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class='col-9 offset-1'>
+        <table class="table">
+          <thead class="table-secondary">
+            <tr>
+              <th>購入日時</th>
+              <th>購入者</th>
+              <th>注文個数</th>
+              <th>注文ステータス</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @orders.each do |order| %>
+              <% order.order_details.each do |order_detail| %>
+                <tr>
+                  <td>
+                    <%= link_to admin_order_path(order.id) do %>
+                      <%= l order.created_at %>
+                    <% end %>
+                  </td>
+                  <td><%= order.customer.last_name %><%= order.customer.first_name %></td>
+                  <td><%= order_detail.amount %></td>
+                  <td><%= order.status_i18n %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 offset-4 mt-5">
+        <%= paginate @orders %>
+      </div>
+    </div>
+  </div>
+<% end %>

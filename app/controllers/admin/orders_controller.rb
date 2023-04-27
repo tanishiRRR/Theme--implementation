@@ -2,8 +2,7 @@ class Admin::OrdersController < ApplicationController
   before_action :admin_scan, only: [:index, :show, :edit, :update]
 
   def show
-    @customer = Customer.find(params[:id])
-    @orders = Order.where(customer_id: params[:id]).order(created_at: :DESC).page(params[:page]).per(10)
+    @order = Order.find(params[:id])
   end
 
   def update

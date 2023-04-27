@@ -32,7 +32,9 @@
           </tr>
           <tr>
             <td>販売ステータス</td>
-            <td><%= @item.is_active ? "販売中" : "販売停止中" %></td>
+            <td class= <%= @item.is_active ? "text-success" : "text-muted" %>>
+              <strong><%= @item.is_active ? "販売中" : "販売停止中" %></strong>
+            </td>
           </tr>
         </tbody>
       </table>
