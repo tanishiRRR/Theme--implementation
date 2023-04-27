@@ -2,40 +2,47 @@ Rails.application.routes.draw do
 
 # 顧客用
 devise_for :customers,skip: [:passwords], controllers: {
-  registrations: "public/registrations",
+  registrations: 'public/registrations',
   sessions: 'public/sessions'
 }
 
-  root to: 'public/homes#top'
-  get 'homes/about' => 'public/homes#about', as: 'about'
+  scope module: :public do
 
-  get 'items' => 'public/items#index'
-  get 'items/:id' => 'public/items#show', as: 'item'
+    root to: 'homes#top'
+    get 'homes/about' => 'homes#about', as: 'about'
 
-  get 'customers/my_page' => 'public/customers#show'
-  get 'customers/information/edit' =>'public/customers#edit'
-  patch 'customers/information' => 'public/customers#update'
-  get 'customers/unsubscribe' => 'public/customers#unsubscribe'
-  patch 'customers/withdraw' => 'public/customers#withdraw'
+    resources :items, only: [:index, :show]
+    # get 'items' => 'items#index'
+    # get 'items/:id' => 'items#show', as: 'item'
 
-  get 'cart_items' => 'public/cart_items#index'
-  patch 'cart_items/:id' => 'public/cart_items#update'
-  delete 'cart_items/:id' => 'public/cart_items#destroy', as: 'destroy_item'
-  delete 'cart_items/destroy_all' => 'public/cart_items#destroy_all'
-  post 'cart_items' => 'public/cart_items#create', as: 'create_item'
+    get 'customers/my_page' => 'customers#show'
+    get 'customers/information/edit' =>'customers#edit'
+    patch 'customers/information' => 'customers#update'
+    get 'customers/unsubscribe' => 'customers#unsubscribe'
+    patch 'customers/withdraw' => 'customers#withdraw'
 
-  get 'orders/new' => 'public/orders#new'
-  post 'orders/confirm' => 'public/orders#comfirm'
-  get 'orders/complete' => 'public/orders#complete'
-  post 'orders' => 'public/orders#create'
-  get 'orders' => 'public/orders#index'
-  get 'orders/:id' => 'public/orders#show', as: 'order'
+    delete 'cart_items/destroy_all' => 'cart_items#destroy_all'
+    resources :cart_items, only: [:index, :update, :destroy, :create]
+    # get 'cart_items' => 'cart_items#index'
+    # patch 'cart_items/:id' => 'cart_items#update'
+    # delete 'cart_items/:id' => 'cart_items#destroy', as: 'destroy_item'
+    # post 'cart_items' => 'cart_items#create', as: 'create_item'
 
-  get 'addresses' => 'public/addresses#index'
-  post 'addresses' => 'public/addresses#create'
-  get 'addresses/:id/edit' => 'public/addresses#edit', as: 'edit_address'
-  patch 'addresses/:id' => 'public/addresses#update'
-  delete 'addresses/:id' => 'public/addresses#destroy', as: 'destroy_address'
+    get 'orders/complete' => 'orders#complete'
+    post 'orders/confirm' => 'orders#comfirm'
+    resources :orders, only: [:new, :create, :index , :show]
+    # get 'orders/new' => 'orders#new'
+    # post 'orders' => 'orders#create'
+    # get 'orders' => 'orders#index'
+    # get 'orders/:id' => 'orders#show', as: 'order'
+
+    resources :addresses, only: [:index, :create, :edit, :update, :destroy]
+    # get 'addresses' => 'addresses#index'
+    # post 'addresses' => 'addresses#create'
+    # get 'addresses/:id/edit' => 'addresses#edit', as: 'edit_address'
+    # patch 'addresses/:id' => 'addresses#update'
+    # delete 'addresses/:id' => 'addresses#destroy', as: 'destroy_address'
+  end
 
 # 管理者用
 devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
@@ -47,7 +54,6 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     root to: 'homes#top'
 
     resources :items, only: [:index, :new,:create, :show, :edit, :update]
-
     # get 'items' => 'items#index'
     # get 'items/new' => 'items#new'
     # post 'items' => 'items#create', as: 'create_item'
@@ -56,21 +62,23 @@ devise_for :admin, skip: [:registrations, :passwords] ,controllers: {
     # patch 'items/:id' => 'items#update', as: 'update_item'
 
     resources :genres, only: [:index, :create, :edit, :update]
-
     # get 'genres' => 'genres#index'
     # post 'genres' => 'genres#create'
     # get 'genres/:id/edit' => 'genres#edit', as: 'edit_genre'
     # patch 'genres/:id' => 'genres#update', as: 'update_genre'
 
-    get 'customers' => 'customers#index'
-    get 'customers/:id' => 'customers#show', as: 'customer'
-    get 'customers/:id/edit' => 'customers#edit', as: 'edit_customer'
-    patch 'customers/:id' => 'customers#update'
+    resources :customers, only: [:index, :show, :edit, :update]
+    # get 'customers' => 'customers#index'
+    # get 'customers/:id' => 'customers#show', as: 'customer'
+    # get 'customers/:id/edit' => 'customers#edit', as: 'edit_customer'
+    # patch 'customers/:id' => 'customers#update'
 
-    get 'orders/:id' => 'orders#show', as: 'order'
-    patch 'orders/:id' => 'orders#update'
+    resources :orders, only: [:show, :update]
+    # get 'orders/:id' => 'orders#show', as: 'order'
+    # patch 'orders/:id' => 'orders#update'
 
-    patch 'orders/:order_id/order_details/:id' => 'order_details#update', as: 'order_detail'
+    resources :order_details, only: [:update]
+    # patch 'orders/:order_id/order_details/:id' => 'order_details#update', as: 'order_detail'
 
   end
 
