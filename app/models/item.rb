@@ -25,4 +25,9 @@ class Item < ApplicationRecord
     (price * 1.1).floor
   end
 
+  # 検索機能用
+  def self.search_for(content)
+    Item.where('name LIKE ?', '%'+content+'%')
+  end
+
 end

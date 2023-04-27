@@ -42,6 +42,9 @@ devise_for :customers,skip: [:passwords], controllers: {
     # get 'addresses/:id/edit' => 'addresses#edit', as: 'edit_address'
     # patch 'addresses/:id' => 'addresses#update'
     # delete 'addresses/:id' => 'addresses#destroy', as: 'destroy_address'
+
+    get 'search' => 'searches#search'
+
   end
 
 # 管理者用
