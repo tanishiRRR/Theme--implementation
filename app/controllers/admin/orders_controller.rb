@@ -7,8 +7,10 @@ class Admin::OrdersController < ApplicationController
 
   def update
     order = Order.find(params[:id])
-    order.update(order_params)
-    order.save
+    order_details = OrderDetail.where(order_id: params[:id])
+    if order.update(order_params)
+      order_details.update_all(making_status: 1) if order.status == "payment_confirmation"
+    end
       flash[:notice] = "注文ステータスを更新しました。"
       redirect_to admin_order_path(order.id)
   end
